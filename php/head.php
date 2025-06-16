@@ -21,6 +21,3 @@
 
 <!-- Script to add the move listener to the window divs -->
 <?php echo Theme::js('js/windowMover.js'); ?>
-
-<!-- Loads the different window divs and the menu -->
-<?php echo Theme::js('js/siteLoader.js'); ?>

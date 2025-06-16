@@ -28,6 +28,12 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 	<!-- Load Bludit Plugins: Site Body Begin -->
 	<?php Theme::plugins('siteBodyBegin'); ?>
 
+
+	<!-- Loads the different window divs and the menu -->
+    <?php echo '<script>var DOMAIN_THEME="' . DOMAIN_THEME . '"</script>'; ?>
+    <?php echo Theme::js('js/siteLoader.js'); ?>
+
+
 	<!-- Content -->
     			<?php if ($WHERE_AM_I == 'page') { ?>
                 <div class="window" style="width: 1200px; height: 800px; left: 5%; top: 8%; z-index: 4;">

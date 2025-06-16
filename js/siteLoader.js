@@ -15,9 +15,9 @@ function addWindow(title, icon, innerHtml, w, h, left, top) {
     h +
     'px; left: ' +
     left +
-    '%; top: ' +
+    'px; top: ' +
     top +
-    '%';
+    'px';
 
   // Create the title bar of the window
   var title_bar = document.createElement('div');
@@ -66,9 +66,16 @@ function addWindow(title, icon, innerHtml, w, h, left, top) {
   var taskbar_item = document.createElement('button');
   taskbar_item.setAttribute('id', window_id + 't');
   taskbar_item.setAttribute('class', 'taskElement active');
+  taskbar_item.setAttribute('style', 'white-space:nowrap; overflow: hidden;');
   taskbar_item.setAttribute('onClick', 'toggleWindow(' + window_id + ')');
-  taskbar_item.innerHTML = '<b>' + title + '</b>';
+  taskbar_item.innerHTML =
+    '<img alt="" src="' +
+    icon +
+    '" style="height: 19px; margin-right: 5px; margin-top:-4px; float:left;">';
+  taskbar_item.innerHTML += '<b>' + title + '</b>';
   document.getElementById('taskbar').appendChild(taskbar_item);
+
+  return window_id;
 }
 
 function maximizeWindow(window_id) {
@@ -90,6 +97,11 @@ function maximizeWindow(window_id) {
 
   window_div.style.width = w;
   window_div.style.height = h;
+
+  window_div.getElementsByClassName('window-content')[0].width = window_div.clientWidth - 16;
+  window_div.getElementsByClassName('window-content')[0].height = window_div.clientHeight - 35;
+  window_div.getElementsByClassName('window-body')[0].style.height =
+    window_div.clientHeight - 35 + 'px';
 }
 
 // Creates the inner html for a Window and calls addWindow()
@@ -110,24 +122,27 @@ function fillWindow(no, w, h) {
     h = menu_icons[no][4];
   }
 
-  var left = Math.floor(Math.random() * 20);
-  var top = Math.floor(Math.random() * 15 + 1);
-
   if (typeof w === 'undefined') {
     w = 816;
     h = 480;
   }
 
+  var left = Math.floor(Math.random() * (document.body.clientWidth - w));
+
+  var top =
+    window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+  top = Math.floor(Math.random() * (top - h - 50));
+
   innerHTML =
-    '<object type="text/html" data="' +
-    link +
-    '" width="' +
+    '<iframe class="window-content" width="' +
     (w - 16) +
     'px" height="' +
     (h - 30) +
-    'px" style="overflow-right: hidden;" onmouseover = "mouseMove(\'event\')"></object>';
+    'px" type="text/html" src="' +
+    link +
+    '" frameborder="0" allowfullscreen onmouseover = "mouseMove(\'event\')"></iframe>';
 
-  addWindow(title, icon, innerHTML, w, h, left, top);
+  return addWindow(title, icon, innerHTML, w, h, left, top);
 }
 
 // Removes a window with a specific ID
@@ -158,7 +173,9 @@ function build_menu() {
   var menu_div = document.getElementById('menu_content');
 
   menu_div.innerHTML =
-    '<img alt="" src="/bl-themes/win98-2/img/andigandhi98.png" style="width: 150px; margin-top: 5px; margin-bottom: 10px;">';
+    '<img alt="" src="' +
+    DOMAIN_THEME +
+    'img/andigandhi98.png" style="width: 150px; margin-top: 5px; margin-bottom: 10px;">';
 
   positionTaskbar();
 }
@@ -252,21 +269,6 @@ function createIcons() {
       desktop_icons[i][3],
       desktop_icons[i][4],
     );
-  }
-}
-
-// Allows to open Windows using direct links
-function openLinkedWindow() {
-  let window_no = window.location.search.substr(1);
-  if (window_no === '') {
-    fillWindow(1);
-    return;
-  }
-  window_no = parseInt(window_no);
-  if (window_no >= menu_icons.length) {
-    fillWindow(desktop_icons[window_no - menu_icons.length]);
-  } else {
-    fillWindow(window_no);
   }
 }
 
