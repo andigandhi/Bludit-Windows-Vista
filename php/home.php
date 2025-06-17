@@ -6,12 +6,12 @@
 <?php endif; ?>
 
 <!-- Normal pages (Start menu Icons) -->
-<?php foreach ($content as $page): ?>
+<?php foreach ($content as $menuPage): ?>
   <script>
-    add_menu_item("<?php echo $page->title(); ?>", "<?php echo $page->permalink(); ?>?loadedFromIndex", "<?php if (
-  $page->coverImage()
+    add_menu_item("<?php echo $menuPage->title(); ?>", "<?php echo $menuPage->permalink(); ?>?loadedFromIndex", "<?php if (
+  $menuPage->coverImage()
 ):
-  echo $page->coverImage();
+  echo $menuPage->coverImage();
 endif; ?>");
   </script>
 <?php endforeach; ?>

@@ -37,6 +37,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     <?php echo Theme::js('js/siteLoader.js'); ?>
 
     <script>
+    // TODO: Change order of items
     <?php
     global $pages;
 
@@ -53,23 +54,23 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
       foreach ($list as $pageKey) {
         try {
           // Create the page object from the page key
-          $page = new Page($pageKey);
-          if (!$page->noindex()) {
+          $pageObj = new Page($pageKey);
+          if (!$pageObj->noindex()) {
             if ($desktop_icon) {
               echo 'add_desktop_item("' .
-                $page->title() .
+                $pageObj->title() .
                 '", "' .
-                $page->permalink() .
+                $pageObj->permalink() .
                 '?loadedFromIndex", "' .
-                $page->coverImage() .
+                $pageObj->coverImage() .
                 '");';
             } else {
               echo 'add_menu_item("' .
-                $page->title() .
+                $pageObj->title() .
                 '", "' .
-                $page->permalink() .
+                $pageObj->permalink() .
                 '?loadedFromIndex", "' .
-                $page->coverImage() .
+                $pageObj->coverImage() .
                 '");';
             }
           }
