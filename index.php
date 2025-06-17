@@ -25,6 +25,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 		<!-- Button for the main Menu -->
 		<button id="taskMenBtn" class="taskElement active" style="width: 30px; text-align: center" onClick="toggleMenu()"><img alt="" src="<?php echo DOMAIN_THEME .
     '/img/start.png'; ?>" height="25px"></button>
+		<?php include THEME_DIR_PHP . 'navbar.php'; ?>
 	</div>
 
 	<!-- Load Bludit Plugins: Site Body Begin -->

@@ -1,32 +1,29 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top text-uppercase">
-	<div class="container">
-		<a class="navbar-brand" href="<?php echo Theme::siteUrl() ?>">
-			<span class="text-white"><?php echo $site->title() ?></span>
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto">
+<span id="nav-clock">00:00</span>
+<script>
+function startTime() {
+  const today = new Date();
+  let h = today.getHours();
+  let m = today.getMinutes();
+  h = timeAddZeroes(h);
+  m = timeAddZeroes(m);
+  document.getElementById('nav-clock').innerHTML =  h + ":" + m;
+  setTimeout(startTime, 10000);
+}
 
-				<!-- Static pages -->
-				<?php foreach ($staticContent as $staticPage) : ?>
-					<li class="nav-item">
-						<a class="nav-link" href="<?php echo $staticPage->permalink() ?>"><?php echo $staticPage->title() ?></a>
-					</li>
-				<?php endforeach ?>
+function timeAddZeroes(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
 
-				<!-- Social Networks -->
-				<?php foreach (Theme::socialNetworks() as $key => $label) : ?>
-					<li class="nav-item">
-						<a class="nav-link" href="<?php echo $site->{$key}(); ?>" target="_blank">
-							<img class="d-none d-sm-block nav-svg-icon" src="<?php echo DOMAIN_THEME . 'img/' . $key . '.svg' ?>" alt="<?php echo $label ?>" />
-							<span class="d-inline d-sm-none"><?php echo $label; ?></span>
-						</a>
-					</li>
-				<?php endforeach; ?>
+startTime();
+</script>
 
-			</ul>
-		</div>
-	</div>
-</nav>
+<!-- Social Networks -->
+<?php foreach (Theme::socialNetworks() as $key => $label): ?>
+	<a class="nav-link" href="<?php echo $site->{$key}(); ?>" target="_blank">
+		<img class="d-none d-sm-block nav-svg-icon" src="<?php echo DOMAIN_THEME .
+    'img/' .
+    $key .
+    '.svg'; ?>" alt="<?php echo $label; ?>" />
+	</a>
+<?php endforeach; ?>

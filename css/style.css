@@ -137,3 +137,17 @@ button.active {
 .window-body {
   font-size: 150%;
 }
+
+.nav-link {
+  width: 20px;
+  margin: 5px;
+  float: right;
+}
+
+#nav-clock {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 5px;
+  margin-left: 10px;
+  float: right;
+}
