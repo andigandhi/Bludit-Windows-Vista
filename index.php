@@ -37,49 +37,90 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     <?php echo Theme::js('js/siteLoader.js'); ?>
 
     <script>
-    // TODO: Change order of items
     <?php
     global $pages;
 
-    foreach ([true, false] as $desktop_icon) {
-      $list = $pages->getList(
+    $list = $pages->getList(
+      $pageNumber = 1,
+      $numberOfItems = -1,
+      $published = false,
+      $static = true,
+      $sticky = false,
+      $draft = false,
+      $scheduled = false
+    );
+
+    for ($i = count($list) - 1; $i >= 0; $i--) {
+      try {
+        // Create the page object from the page key
+        $pageObj = new Page($list[$i]);
+        if (!$pageObj->noindex()) {
+          echo 'add_desktop_item("' .
+            $pageObj->title() .
+            '", "' .
+            $pageObj->permalink() .
+            '?loadedFromIndex", "' .
+            $pageObj->coverImage() .
+            '");';
+        }
+      } catch (Exception $e) {
+        // Continue
+      }
+    }
+
+    $list = array_merge(
+      $pages->getList(
         $pageNumber = 1,
         $numberOfItems = -1,
-        $published = !$desktop_icon,
-        $static = $desktop_icon,
-        $sticky = !$desktop_icon,
+        $published = false,
+        $static = false,
+        $sticky = true,
         $draft = false,
         $scheduled = false
-      );
-      foreach ($list as $pageKey) {
-        try {
-          // Create the page object from the page key
-          $pageObj = new Page($pageKey);
-          if (!$pageObj->noindex()) {
-            if ($desktop_icon) {
-              echo 'add_desktop_item("' .
-                $pageObj->title() .
-                '", "' .
-                $pageObj->permalink() .
-                '?loadedFromIndex", "' .
-                $pageObj->coverImage() .
-                '");';
-            } else {
-              echo 'add_menu_item("' .
-                $pageObj->title() .
-                '", "' .
-                $pageObj->permalink() .
-                '?loadedFromIndex", "' .
-                $pageObj->coverImage() .
-                '");';
-            }
-          }
-        } catch (Exception $e) {
-          // Continue
+      ),
+      $pages->getList(
+        $pageNumber = Paginator::currentPage(),
+        $numberOfItems = Paginator::$pager['itemsPerPage'],
+        $published = true,
+        $static = false,
+        $sticky = false,
+        $draft = false,
+        $scheduled = false
+      )
+    );
+
+    for ($i = 0; $i < count($list); $i++) {
+      try {
+        // Create the page object from the page key
+        $pageObj = new Page($list[$i]);
+        if (!$pageObj->noindex()) {
+          echo 'add_menu_item("' .
+            $pageObj->title() .
+            '", "' .
+            $pageObj->permalink() .
+            '?loadedFromIndex", "' .
+            $pageObj->coverImage() .
+            '");';
         }
+      } catch (Exception $e) {
+        // Continue
       }
     }
     ?>
+
+    // Pagination TODO: More elegant way without reloading the whole site
+    <?php if (Paginator::numberOfPages() > 1): ?>
+          <?php if (Paginator::showPrev()): ?>
+            add_menu_link("<?php echo $L->get(
+              'Previous'
+            ); ?>", "<?php echo Paginator::previousPageUrl(); ?>", "");
+          <?php endif; ?>
+          <?php if (Paginator::showNext()): ?>
+            add_menu_link("<?php echo $L->get(
+              'Next'
+            ); ?>", "<?php echo Paginator::nextPageUrl(); ?>", "");
+          <?php endif; ?>
+    <?php endif; ?>
     </script>
 
 	<!-- Load the content if a specific page is opened -->
