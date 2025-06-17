@@ -153,3 +153,8 @@ button.active {
   margin-left: 10px;
   float: right;
 }
+
+.desktop-icon-image {
+  width: 100%;
+  cursor: pointer;
+}

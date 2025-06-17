@@ -3,6 +3,7 @@
 // ------ Methods for the window divs ------
 
 // Adds a new window with a innerHtml to the document
+// TODO: Change Parameters
 function addWindow(title, icon, innerHtml, w, h, left, top) {
   // Create a random ID
   var window_id = Math.floor(Math.random() * 1000000 + 1000);
@@ -107,36 +108,36 @@ function maximizeWindow(window_id) {
 }
 
 // Creates the inner html for a Window and calls addWindow()
-function fillWindow(no, w, h) {
-  let title = '';
-  let icon = '';
-  let link = '';
-  let innerHTML = '';
-  title = no[0];
-  link = no[1];
-  icon = no[2];
+function fillWindow(title, link, icon, windowSize = [816, 480], windowBorder) {
+  var width;
+  var left;
+  var top;
 
-  if (typeof w === 'undefined') {
-    w = 816;
-    h = 480;
+  // Total height of the document
+  var totalHeight =
+    window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+  if (typeof windowBorder === 'undefined') {
+    left = Math.floor(Math.random() * (document.body.clientWidth - windowSize[0]));
+    top = Math.floor(Math.random() * (totalHeight - windowSize[1] - 50));
+  } else {
+    left = windowBorder[0];
+    top = windowBorder[1];
+
+    windowSize[0] = document.body.clientWidth - left - windowBorder[2];
+    windowSize[1] = totalHeight - top - windowBorder[3] - 50;
   }
 
-  var left = Math.floor(Math.random() * (document.body.clientWidth - w));
-
-  var top =
-    window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-  top = Math.floor(Math.random() * (top - h - 50));
-
-  innerHTML =
+  let innerHTML =
     '<iframe class="window-content" width="' +
-    (w - 16) +
+    (windowSize[0] - 16) +
     'px" height="' +
-    (h - 30) +
+    (windowSize[1] - 30) +
     'px" type="text/html" src="' +
     link +
     '" frameborder="0" allowfullscreen onmouseover = "mouseMove(\'event\')"></iframe>';
 
-  return addWindow(title, icon, innerHTML, w, h, left, top);
+  return addWindow(title, icon, innerHTML, windowSize[0], windowSize[1], left, top);
 }
 
 // Removes a window with a specific ID
@@ -221,19 +222,24 @@ function toggleMenu() {
 
 // Creates a desktop icon
 function add_desktop_item(itemTitle, itemContent, itemImage) {
+  // Create the div containing the icon
   var desktop_icon = document.createElement('div');
   desktop_icon.setAttribute('class', 'icon');
-  var array_to_text = "['" + itemTitle + "','" + itemContent + "','" + itemImage + "']";
-  desktop_icon.innerHTML =
-    '<img alt="" src="' +
-    itemImage +
-    '" width="100%" style="cursor: pointer;" onClick="fillWindow(' +
-    array_to_text +
-    ');">';
+
+  // Add the icon image
+  var desktop_icon_img = document.createElement('img');
+  desktop_icon_img.src = itemImage;
+  desktop_icon_img.className = 'desktop-icon-image';
+  desktop_icon_img.setAttribute(
+    'onClick',
+    'fillWindow("' + itemTitle + '","' + itemContent + '","' + itemImage + '");',
+  );
+  desktop_icon.appendChild(desktop_icon_img);
+
+  // Add the icon Text
   desktop_icon.innerHTML += itemTitle;
 
-  addMoveListeners(desktop_icon, desktop_icon);
-
+  // Add the icon to the document
   document.body.appendChild(desktop_icon);
 }
 
@@ -253,8 +259,10 @@ function add_menu_item(itemTitle, itemContent, itemImage) {
   menu_item.className = 'menuButton';
   document.getElementById('menu_content').appendChild(menu_item);
 
-  var array_to_text = "['" + itemTitle + "','" + itemContent + "','" + itemImage + "']";
-  menu_item.setAttribute('onClick', 'fillWindow(' + array_to_text + ');');
+  menu_item.setAttribute(
+    'onClick',
+    'fillWindow("' + itemTitle + '","' + itemContent + '","' + itemImage + '");',
+  );
 }
 
 // Adds a helper link to the menu. The link reloads the whole site
