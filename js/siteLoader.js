@@ -110,17 +110,9 @@ function fillWindow(no, w, h) {
   let icon = '';
   let link = '';
   let innerHTML = '';
-  if (typeof no === 'object') {
-    title = no[0];
-    link = no[1];
-    icon = no[2];
-  } else {
-    title = menu_icons[no][0];
-    link = menu_icons[no][1];
-    icon = menu_icons[no][2];
-    w = menu_icons[no][3];
-    h = menu_icons[no][4];
-  }
+  title = no[0];
+  link = no[1];
+  icon = no[2];
 
   if (typeof w === 'undefined') {
     w = 816;
@@ -151,7 +143,7 @@ function removeWindow(id) {
   document.getElementById('taskbar').removeChild(document.getElementById(id + 't'));
 }
 
-// Removes a window with a specific ID
+// Minimizes/re-opens a window with a specific ID
 function toggleWindow(id) {
   var window_div = document.getElementById(id);
   var taskbar_button = document.getElementById(id + 't');
@@ -166,7 +158,8 @@ function toggleWindow(id) {
   }
 }
 
-// ------ Functions for the bulding of the menu ------
+/////////////////////////////////////////
+// Functions for the bulding and manipulating the menu and the taskbar
 
 // Builds the menu
 function build_menu() {
@@ -178,26 +171,6 @@ function build_menu() {
     'img/andigandhi98.png" style="width: 150px; margin-top: 5px; margin-bottom: 10px;">';
 
   positionTaskbar();
-}
-
-// Function to add a menu point entry to the menu
-function add_menu_item(itemTitle, itemContent, itemImage) {
-  let menu_item = document.createElement('div');
-  menu_item.style.height = '30px';
-  // Add Icon
-  if (itemImage != '')
-    menu_item.innerHTML =
-      '<img alt="" src="' + itemImage + '" style="width: 20px; margin: 5px; float:left;">';
-  // Add Text
-  menu_item.innerHTML +=
-    '<div style="height: 20px;line-height: 20px;margin: 5px;float:left;"><b>' +
-    itemTitle +
-    '</b></div>';
-  menu_item.className = 'menuButton';
-  document.getElementById('menu_content').appendChild(menu_item);
-
-  var array_to_text = "['" + itemTitle + "','" + itemContent + "','" + itemImage + "']";
-  menu_item.setAttribute('onClick', 'fillWindow(' + array_to_text + ');');
 }
 
 // Position the taskbar on the bottom
@@ -241,6 +214,9 @@ function toggleMenu() {
   }
 }
 
+/////////////////////////////////////////
+// Functions for adding links to the page
+
 // Creates a desktop icon
 function add_desktop_item(itemTitle, itemContent, itemImage) {
   var desktop_icon = document.createElement('div');
@@ -259,19 +235,27 @@ function add_desktop_item(itemTitle, itemContent, itemImage) {
   document.body.appendChild(desktop_icon);
 }
 
-// Creates all the icons of the array icon[] by calling createIcon()
-function createIcons() {
-  for (var i = 0; i < desktop_icons.length; i++) {
-    createIcon(
-      desktop_icons[i][0],
-      desktop_icons[i][1],
-      desktop_icons[i][2],
-      desktop_icons[i][3],
-      desktop_icons[i][4],
-    );
-  }
+// Function to add a menu point entry to the menu
+function add_menu_item(itemTitle, itemContent, itemImage) {
+  let menu_item = document.createElement('div');
+  menu_item.style.height = '30px';
+  // Add Icon
+  if (itemImage != '')
+    menu_item.innerHTML =
+      '<img alt="" src="' + itemImage + '" style="width: 20px; margin: 5px; float:left;">';
+  // Add Text
+  menu_item.innerHTML +=
+    '<div style="height: 20px;line-height: 20px;margin: 5px;float:left;"><b>' +
+    itemTitle +
+    '</b></div>';
+  menu_item.className = 'menuButton';
+  document.getElementById('menu_content').appendChild(menu_item);
+
+  var array_to_text = "['" + itemTitle + "','" + itemContent + "','" + itemImage + "']";
+  menu_item.setAttribute('onClick', 'fillWindow(' + array_to_text + ');');
 }
 
+// Adds a helper link to the menu. The link reloads the whole site
 function add_menu_link(itemTitle, itemContent, itemImage) {
   let menu_item = document.createElement('div');
   menu_item.style.height = '30px';

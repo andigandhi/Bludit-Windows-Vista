@@ -1,6 +1,7 @@
 <?php
+// If the sub-page is loaded from the appication itself (displayed in a window iFrame), only the raw content of the sub site is printed
 if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
-  include THEME_DIR_PHP . 'page.php';
+  echo $page->content();
   exit();
 } ?>
 
@@ -22,7 +23,8 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 	<!-- Creates the Taskbar -->
 	<div class="window" id="taskbar">
 		<!-- Button for the main Menu -->
-		<button id="taskMenBtn" class="taskElement active" style="width: 30px; text-align: center" onClick="toggleMenu()"></button>
+		<button id="taskMenBtn" class="taskElement active" style="width: 30px; text-align: center" onClick="toggleMenu()"><img alt="" src="<?php echo DOMAIN_THEME .
+    '/img/start.png'; ?>" height="25px"></button>
 	</div>
 
 	<!-- Load Bludit Plugins: Site Body Begin -->
@@ -33,25 +35,55 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     <?php echo '<script>var DOMAIN_THEME="' . DOMAIN_THEME . '"</script>'; ?>
     <?php echo Theme::js('js/siteLoader.js'); ?>
 
+    <script>
+    <?php
+    global $pages;
 
-	<!-- Content -->
-    			<?php if ($WHERE_AM_I == 'page') { ?>
-                <div class="window" style="width: 1200px; height: 800px; left: 5%; top: 8%; z-index: 4;">
-                <div class="title-bar">
-                    <div class="title-bar-text"><img alt="" src="<?php if ($page->coverImage()):
-                      echo $page->coverImage();
-                    endif; ?>" style="height: 11px; margin-right: 5px; float:left;">Über</div>
-                        <div class="title-bar-controls">
-                            <button aria-label="Minimize" onclick="toggleWindow(217750)"></button>
-                            <button id="btn-resize-217750" aria-label="Maximize" onclick="maximizeWindow(217750)"></button>
-                            <button aria-label="Close" onclick="removeWindow(217750)"></button>
-                        </div>
-                    </div>
-                    <div class="window-body" style="position: relative; height: 480px; overflow: hidden;">
-                <?php
-                include THEME_DIR_PHP . 'page.php';
-                echo '</div></div>';
-                } else {include THEME_DIR_PHP . 'home.php';} ?>
+    foreach ([true, false] as $desktop_icon) {
+      $list = $pages->getList(
+        $pageNumber = 1,
+        $numberOfItems = -1,
+        $published = !$desktop_icon,
+        $static = $desktop_icon,
+        $sticky = !$desktop_icon,
+        $draft = false,
+        $scheduled = false
+      );
+      foreach ($list as $pageKey) {
+        try {
+          // Create the page object from the page key
+          $page = new Page($pageKey);
+          if (!$page->noindex()) {
+            if ($desktop_icon) {
+              echo 'add_desktop_item("' .
+                $page->title() .
+                '", "' .
+                $page->permalink() .
+                '?loadedFromIndex", "' .
+                $page->coverImage() .
+                '");';
+            } else {
+              echo 'add_menu_item("' .
+                $page->title() .
+                '", "' .
+                $page->permalink() .
+                '?loadedFromIndex", "' .
+                $page->coverImage() .
+                '");';
+            }
+          }
+        } catch (Exception $e) {
+          // Continue
+        }
+      }
+    }
+    ?>
+    </script>
+
+	<!-- Load the content if a specific page is opened -->
+    <?php if ($WHERE_AM_I == 'page') {
+      include THEME_DIR_PHP . 'page.php';
+    } ?>
 
 	<!-- Load Bludit Plugins: Site Body End -->
 	<?php Theme::plugins('siteBodyEnd'); ?>

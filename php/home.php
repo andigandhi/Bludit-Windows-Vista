@@ -26,7 +26,7 @@ endif; ?>");
 </script>
 <?php endforeach; ?>
 
-<!-- Pagination -->
+<!-- Pagination TODO: More elegant way without reloading the whole site -->
 <?php if (Paginator::numberOfPages() > 1): ?>
   <nav class="paginator">
     <ul class="pagination flex-wrap">
@@ -38,7 +38,6 @@ endif; ?>");
           'Previous'
         ); ?>", "<?php echo Paginator::previousPageUrl(); ?>", "");
       </script>
-
       <?php endif; ?>
 
       <!-- Next button -->
