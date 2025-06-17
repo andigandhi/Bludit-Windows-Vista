@@ -1,3 +1,5 @@
+// TODO: Clean up Code!
+
 // ------ Methods for the window divs ------
 
 // Adds a new window with a innerHtml to the document

@@ -1,3 +1,4 @@
+<!-- Clock -->
 <span id="nav-clock">00:00</span>
 <script>
 function startTime() {

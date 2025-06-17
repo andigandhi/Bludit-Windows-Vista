@@ -1,3 +1,4 @@
+<!-- If there is no content: Throw error! -->
 <?php if (empty($content)): ?>
   <div class="mt-4">
     <?php $language->p('No pages found'); ?>

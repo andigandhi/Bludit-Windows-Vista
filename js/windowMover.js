@@ -92,6 +92,7 @@ function focus_window(div) {
 }
 
 // Movement listener for mobile phones
+// TODO: Fix touch listener
 function touchMove(e) {
   event.preventDefault();
 
