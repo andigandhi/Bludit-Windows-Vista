@@ -142,15 +142,14 @@ button.active {
 
 .nav-link {
   width: 20px;
-  margin: 5px;
+  margin: 7px;
   float: right;
 }
 
 #nav-clock {
-  font-size: 20px;
+  font-size: 12px;
   font-weight: 600;
-  margin: 5px;
-  margin-left: 10px;
+  margin: 12px;
   float: right;
 }
 

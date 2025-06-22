@@ -1,7 +1,7 @@
 <?php
 // If the sub-page is loaded from the appication itself (displayed in a window iFrame), only the raw content of the sub site is printed
 if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
-  echo $page->content();
+  include THEME_DIR_PHP . 'page-iframe.php';
   exit();
 } ?>
 
