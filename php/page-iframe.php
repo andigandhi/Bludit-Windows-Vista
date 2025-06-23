@@ -5,7 +5,6 @@
 	<style>
 	body {
 	font-size: 130%;
-	overflow: hidden;
 	}
 	</style>
 	<meta charset="utf-8">
