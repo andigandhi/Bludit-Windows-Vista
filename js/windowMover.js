@@ -1,21 +1,24 @@
-var mouse_position;
-var mouse_is_down = false;
+var mousePosition;
+var isDown = false;
 
-var window_div;
-var title_bar;
-var window_mouse_offset = [0, 0];
-var highest_z_value = 1;
+var div;
+var titleBar;
+var offset = [0, 0];
+var zMax = 1;
 
 // Adds the listener to the title bar of a window
-function addMoveListeners(window_div, title_bar) {
-  title_bar.addEventListener(
+function addMoveListeners(div1, titleBar1) {
+  div = div1;
+  titleBar = titleBar1;
+
+  titleBar.addEventListener(
     'mousedown',
     function (event) {
       mousedown(event);
     },
     true,
   );
-  title_bar.addEventListener(
+  titleBar.addEventListener(
     'touchstart',
     function (event) {
       mousedown(event);
@@ -23,7 +26,7 @@ function addMoveListeners(window_div, title_bar) {
     true,
   );
 
-  focus_window(window_div);
+  inForground(div);
 }
 
 // Starts the mouse tracking
@@ -34,9 +37,9 @@ function addDocumentTracker() {
 
 // Calculates initial cursor offset for mouse movement
 function mousedown(e) {
-  window_div = e.target.parentElement;
+  div = e.target.parentElement;
 
-  if (window_div === null) {
+  if (div === null) {
     return;
   }
 
@@ -44,20 +47,17 @@ function mousedown(e) {
     return;
   }
 
-  window_mouse_offset = [window_div.offsetLeft, window_div.offsetTop];
-  mouse_is_down = true;
-  window_mouse_offset = [window_div.offsetLeft - e.clientX, window_div.offsetTop - e.clientY];
+  offset = [div.offsetLeft, div.offsetTop];
+  isDown = true;
+  offset = [div.offsetLeft - e.clientX, div.offsetTop - e.clientY];
 
-  if (isNaN(window_mouse_offset[0])) {
-    window_mouse_offset = [
-      window_div.offsetLeft - e.touches[0].clientX,
-      window_div.offsetTop - e.touches[0].clientY,
-    ];
+  if (isNaN(offset[0])) {
+    offset = [div.offsetLeft - e.touches[0].clientX, div.offsetTop - e.touches[0].clientY];
   }
 
   addDocumentTracker();
 
-  focus_window(window_div);
+  inForground(div);
 }
 
 // Stops the mouse tracking
@@ -65,7 +65,7 @@ function documentMouseTrackStart() {
   document.addEventListener(
     'mouseup',
     function () {
-      mouse_is_down = false;
+      isDown = false;
       remDocumentTracker();
     },
     true,
@@ -73,39 +73,41 @@ function documentMouseTrackStart() {
   document.addEventListener(
     'touchend',
     function () {
-      mouse_is_down = false;
+      isDown = false;
       remDocumentTracker();
     },
     true,
   );
 }
-
 function remDocumentTracker() {
   document.removeEventListener('mousemove', mouseMove, true);
   document.removeEventListener('touchmove', touchMove, true);
 }
 
 // Move window to the front
-function focus_window(div) {
-  div.style.zIndex = highest_z_value;
-  highest_z_value++;
+function inForground(div) {
+  div.style.zIndex = zMax;
+  //document.getElementById(div.id+'t').active = true;
+  zMax++;
 }
 
 // Movement listener for mobile phones
-// TODO: Fix touch listener
 function touchMove(e) {
   event.preventDefault();
 
-  if (mouse_is_down) {
+  if (isDown) {
     touchPosition = {
       x: e.changedTouches[0].clientX,
       y: e.changedTouches[0].clientY,
     };
 
-    if (touchPosition.x + offset[0] + div.clientWidth - 15 <= document.body.clientWidth) {
-      window_div.style.left = touchPosition.x + window_mouse_offset[0] + 'px';
+    var new_x = touchPosition.x + offset[0];
+    if (new_x + div.clientWidth - 15 > document.body.clientWidth) {
+      new_x = document.body.clientWidth + 15 - div.clientWidth;
     }
-    window_div.style.top = touchPosition.y + window_mouse_offset[1] + 'px';
+    div.style.left = new_x + 'px';
+
+    div.style.top = touchPosition.y + offset[1] + 'px';
   }
 }
 
@@ -113,14 +115,11 @@ function touchMove(e) {
 function mouseMove(e) {
   event.preventDefault();
 
-  if (mouse_is_down) {
-    mouse_position = {
-      x: event.clientX,
-      y: event.clientY,
-    };
+  if (isDown) {
+    mousePosition = { x: event.clientX, y: event.clientY };
 
-    window_div.style.left = mouse_position.x + window_mouse_offset[0] + 'px';
-    window_div.style.top = mouse_position.y + window_mouse_offset[1] + 'px';
+    div.style.left = mousePosition.x + offset[0] + 'px';
+    div.style.top = mousePosition.y + offset[1] + 'px';
   }
 }
 
