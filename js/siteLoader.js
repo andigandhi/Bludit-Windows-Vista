@@ -42,7 +42,7 @@ function addWindow(title, icon, innerHtml, w, h, left, top) {
   title_bar_item.innerHTML +=
     '<button id="btn-resize-' +
     window_id +
-    '" aria-label="Maximize" onClick="maximizeWindow(' +
+    '" aria-label="Maximize" onClick="resizeWindow(' +
     window_id +
     ')"></button>';
   title_bar_item.innerHTML +=
@@ -81,32 +81,6 @@ function addWindow(title, icon, innerHtml, w, h, left, top) {
   return window_id;
 }
 
-function maximizeWindow(window_id) {
-  var window_div = document.getElementById(window_id);
-  var resize_button = document.getElementById('btn-resize-' + window_id);
-
-  w = '100%';
-  h = '100%';
-
-  if (window_div.style.width == '100%') {
-    w = '816px';
-    h = '480px';
-    resize_button.ariaLabel = 'Maximize';
-  } else {
-    window_div.style.top = '0';
-    window_div.style.left = '0';
-    resize_button.ariaLabel = 'Restore';
-  }
-
-  window_div.style.width = w;
-  window_div.style.height = h;
-
-  window_div.getElementsByClassName('window-content')[0].width = window_div.clientWidth - 16;
-  window_div.getElementsByClassName('window-content')[0].height = window_div.clientHeight - 35;
-  window_div.getElementsByClassName('window-body')[0].style.height =
-    window_div.clientHeight - 35 + 'px';
-}
-
 // Creates the inner html for a Window and calls addWindow()
 function fillWindow(title, link, icon, windowSize = [816, 480], windowBorder) {
   var width;
@@ -140,7 +114,34 @@ function fillWindow(title, link, icon, windowSize = [816, 480], windowBorder) {
   return addWindow(title, icon, innerHTML, windowSize[0], windowSize[1], left, top);
 }
 
-// Removes a window with a specific ID
+// Maximize/float a window with a certain window id
+function resizeWindow(window_id) {
+  var window_div = document.getElementById(window_id);
+  var resize_button = document.getElementById('btn-resize-' + window_id);
+
+  w = '100%';
+  h = '100%';
+
+  if (window_div.style.width == '100%') {
+    w = '816px';
+    h = '480px';
+    resize_button.ariaLabel = 'Maximize';
+  } else {
+    window_div.style.top = '0';
+    window_div.style.left = '0';
+    resize_button.ariaLabel = 'Restore';
+  }
+
+  window_div.style.width = w;
+  window_div.style.height = h;
+
+  window_div.getElementsByClassName('window-content')[0].width = window_div.clientWidth - 16;
+  window_div.getElementsByClassName('window-content')[0].height = window_div.clientHeight - 35;
+  window_div.getElementsByClassName('window-body')[0].style.height =
+    window_div.clientHeight - 35 + 'px';
+}
+
+// Removes a window with a specific ID (close button)
 function removeWindow(id) {
   document.body.removeChild(document.getElementById(id));
   document.getElementById('taskbar').removeChild(document.getElementById(id + 't'));
@@ -265,7 +266,7 @@ function add_menu_item(itemTitle, itemContent, itemImage) {
   );
 }
 
-// Adds a helper link to the menu. The link reloads the whole site
+// Adds a helper link to the menu. The link reloads the whole site and is used for pagination
 function add_menu_link(itemTitle, itemContent, itemImage) {
   let menu_item = document.createElement('div');
   menu_item.style.height = '30px';
