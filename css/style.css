@@ -69,8 +69,16 @@ img {
   float: left;
 }
 
-#menu_content {
+#menu_content,
+#menu-content-image {
   margin-left: 20px;
+}
+
+#menu-content-image {
+  height: 35px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  display: block;
 }
 
 .menuButton {

@@ -169,10 +169,7 @@ function toggleWindow(id) {
 function build_menu() {
   var menu_div = document.getElementById('menu_content');
 
-  menu_div.innerHTML =
-    '<img alt="" src="' +
-    DOMAIN_THEME +
-    'img/andigandhi98.png" style="width: 150px; margin-top: 5px; margin-bottom: 10px;">';
+  menu_div.innerHTML = '';
 
   positionTaskbar();
 }

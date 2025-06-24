@@ -16,6 +16,9 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 	<!-- Creates the main Menu -->
 	<div class="window" id="mainMenu">
 		<div id="mainMenuSideBar"></div>
+		<img alt="" id="menu-content-image" src="<?php echo $site->logo()
+    ? DOMAIN_UPLOADS . $site->logo(false)
+    : DOMAIN_THEME . '/img/andigandhi98.png'; ?>">
 		<div id="menu_content">
 		</div>
 	</div>
