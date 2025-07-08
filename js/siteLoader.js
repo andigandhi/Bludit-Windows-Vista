@@ -227,6 +227,7 @@ function add_desktop_item(itemTitle, itemContent, itemImage) {
   // Add the icon image
   var desktop_icon_img = document.createElement('img');
   desktop_icon_img.src = itemImage;
+  desktop_icon_img.alt = 'Icon for menu item ' + itemTitle;
   desktop_icon_img.className = 'desktop-icon-image';
   desktop_icon_img.setAttribute(
     'onClick',
@@ -248,7 +249,11 @@ function add_menu_item(itemTitle, itemContent, itemImage) {
   // Add Icon
   if (itemImage != '')
     menu_item.innerHTML =
-      '<img alt="" src="' + itemImage + '" style="width: 20px; margin: 5px; float:left;">';
+      '<img alt="Icon for menu item ' +
+      itemTitle +
+      '" src="' +
+      itemImage +
+      '" style="width: 20px; margin: 5px; float:left;">';
   // Add Text
   menu_item.innerHTML +=
     '<div style="height: 20px;line-height: 20px;margin: 5px;float:left;"><b>' +
@@ -270,7 +275,11 @@ function add_menu_link(itemTitle, itemContent, itemImage) {
   // Add Icon
   if (itemImage != '')
     menu_item.innerHTML =
-      '<img alt="" src="' + itemImage + '" style="width: 20px; margin: 5px; float:left;">';
+      '<img alt="Icon for menu item ' +
+      itemTitle +
+      '" src="' +
+      itemImage +
+      '" style="width: 20px; margin: 5px; float:left;">';
   // Add Text
   menu_item.innerHTML +=
     '<div style="height: 20px;line-height: 20px;margin: 5px;float:left;"><b>' +
