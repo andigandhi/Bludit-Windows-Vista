@@ -10,6 +10,9 @@
 <!-- Include Favicon -->
 <?php echo Theme::favicon('img/favicon.png'); ?>
 
+<!-- Viewport -->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <!-- Include CSS Styles from this theme -->
 <?php echo Theme::css('css/style.css'); ?>
 
