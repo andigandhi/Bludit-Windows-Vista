@@ -3,6 +3,9 @@
 if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
   include THEME_DIR_PHP . 'page-iframe.php';
   exit();
+} elseif (isset($_GET['archive'])) {
+  include THEME_DIR_PHP . 'archive.php';
+  exit();
 } ?>
 
 <!doctype html>
@@ -82,7 +85,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
         $scheduled = false
       ),
       $pages->getList(
-        $pageNumber = Paginator::currentPage(),
+        $pageNumber = 1,
         $numberOfItems = Paginator::$pager['itemsPerPage'],
         $published = true,
         $static = false,
@@ -111,19 +114,10 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     }
     ?>
 
-    // Pagination TODO: More elegant way without reloading the whole site
-    <?php if (Paginator::numberOfPages() > 1): ?>
-          <?php if (Paginator::showPrev()): ?>
-            add_menu_link("<?php echo $L->get(
-              'Previous'
-            ); ?>", "<?php echo Paginator::previousPageUrl(); ?>", "");
-          <?php endif; ?>
-          <?php if (Paginator::showNext()): ?>
-            add_menu_link("<?php echo $L->get(
-              'Next'
-            ); ?>", "<?php echo Paginator::nextPageUrl(); ?>", "");
-          <?php endif; ?>
-    <?php endif; ?>
+    // Pagination
+    <?php if (Paginator::numberOfPages() > 1) {
+      echo 'add_menu_item("Archive", "?archive", "' . DOMAIN_THEME . 'img/archive.png");';
+    } ?>
     </script>
 
 	<!-- Load the content if a specific page is opened -->
