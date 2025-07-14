@@ -6,6 +6,10 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 } elseif (isset($_GET['archive'])) {
   include THEME_DIR_PHP . 'archive.php';
   exit();
+} elseif (isset($_GET['category'])) {
+  $currentCategory = htmlspecialchars($_GET['category']);
+  include THEME_DIR_PHP . 'category.php';
+  exit();
 } ?>
 
 <!doctype html>
@@ -17,19 +21,36 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 <body onResize="positionTaskbar()" onLoad="positionTaskbar()">
 
 	<!-- Creates the main Menu -->
-	<div class="window" id="mainMenu">
-		<div id="mainMenuSideBar"></div>
-		<img alt="" id="menu-content-image" src="<?php echo $site->logo()
-    ? DOMAIN_UPLOADS . $site->logo(false)
-    : DOMAIN_THEME . '/img/andigandhi98.png'; ?>">
-		<div id="menu_content">
+	<div class="window glass" id="mainMenu">
+	   <div id="mainMenuLeft">
+    		<div id="menu_content">
+    		</div>
 		</div>
+	 <div id="mainMenuCategories">
+		<div id="mainMenuCategoriesImage" class="window">
+		<img id="mainMenuCategoriesImageTag" alt="" width=100% src="<?php echo $site->logo()
+    ? DOMAIN_UPLOADS . $site->logo(false)
+    : DOMAIN_THEME . '/img/user.bmp'; ?>">
+		</div>
+		<?php
+  global $categories;
+  foreach ($categories->db as $key => $fields) {
+    echo '<div class="mainMenuCategoriesItem" onClick=\'fillWindow("' .
+      $fields['name'] .
+      '","?category=' .
+      $fields['name'] .
+      '","")\'>' .
+      $fields['name'] .
+      '</div>';
+  }
+  ?>
+    </div>
 	</div>
 
 	<!-- Creates the Taskbar -->
-	<div class="window" id="taskbar">
+	<div class="window glass" id="taskbar">
 		<!-- Button for the main Menu -->
-		<button id="taskMenBtn" class="taskElement active" style="width: 30px; text-align: center" onClick="toggleMenu()" aria-label="Toggle main menu"><img alt="Toggle main menu" src="<?php echo DOMAIN_THEME .
+		<button id="taskMenBtn" class="taskElement active" onClick="toggleMenu()" aria-label="Toggle main menu"><img alt="Toggle main menu" src="<?php echo DOMAIN_THEME .
     '/img/start.png'; ?>" height="25px"></button>
 		<?php include THEME_DIR_PHP . 'navbar.php'; ?>
 	</div>

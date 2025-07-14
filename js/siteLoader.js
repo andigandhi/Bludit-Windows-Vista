@@ -9,13 +9,13 @@ function addWindow(title, icon, innerHtml, w, h, left, top) {
   var window_id = Math.floor(Math.random() * 1000000 + 1000);
   // Create the window div and add attributes
   var new_window = document.createElement('div');
-  new_window.setAttribute('class', 'window');
+  new_window.setAttribute('class', 'window glass active');
   new_window.setAttribute('id', window_id);
   new_window.style =
     'position: absolute; width: ' +
     w +
     'px; height: ' +
-    h +
+    (h + 35) +
     'px; left: ' +
     left +
     'px; top: ' +
@@ -74,8 +74,7 @@ function addWindow(title, icon, innerHtml, w, h, left, top) {
   taskbar_item.innerHTML =
     '<img alt="" src="' +
     icon +
-    '" style="height: 19px; margin-right: 5px; margin-top:-4px; float:left;">';
-  taskbar_item.innerHTML += '<b>' + title + '</b>';
+    '" style="height: 25px; margin-right: 5px; margin-top:-4px; float:left;">';
   document.getElementById('taskbar').appendChild(taskbar_item);
 
   return window_id;
@@ -176,7 +175,6 @@ function build_menu() {
 
 // Position the taskbar on the bottom
 function positionTaskbar() {
-  // don't show taskbar on mobile devices
   var isMobile = false;
   if (
     /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(

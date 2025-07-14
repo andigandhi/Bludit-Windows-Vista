@@ -52,7 +52,7 @@ img {
 #mainMenu {
   position: absolute;
   left: 5px;
-  width: 300px;
+  width: 450px;
   /*overflow: overlay;*/
   z-index: 100;
 }
@@ -69,16 +69,53 @@ img {
   float: left;
 }
 
+#mainMenuLeft {
+  width: 300px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 5px;
+  overflow: hidden;
+  float: left;
+}
+
+#mainMenuCategories {
+  width: 130px;
+  float: left;
+}
+
 #menu_content,
 #menu-content-image {
-  margin-left: 20px;
+  margin-left: 5px;
 }
 
 #menu-content-image {
-  height: 35px;
+  width: 120px;
   margin-top: 5px;
   margin-bottom: 10px;
+  align-self: right;
   display: block;
+}
+
+#mainMenuCategoriesImage {
+  width: 50px;
+  height: 50px;
+  margin-left: 35px;
+  margin-top: -25px;
+  margin-bottom: 25px;
+  padding: 5px;
+}
+
+#mainMenuCategoriesImageTag {
+  border-radius: 4px;
+}
+
+.mainMenuCategoriesItem {
+  color: #ffffff;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-left: 3px;
+  cursor: pointer;
 }
 
 .menuButton {
@@ -102,16 +139,20 @@ img {
   position: absolute;
   left: -5px;
   width: 100vw;
+  width: -webkit-calc(100% + 10px);
+  width: -moz-calc(100% + 10px);
+  width: calc(100% + 10px);
   height: 50px;
   z-index: 99;
 }
 
 .taskElement {
   float: left;
-  text-align: left;
-  height: 30px;
-  margin: 5px;
-  width: 200px;
+  text-align: center;
+  height: 40px;
+  margin-left: 5px;
+  width: 50px;
+  min-width: 20px;
 }
 
 #btnClock {
@@ -157,7 +198,10 @@ button.active {
 #nav-clock {
   font-size: 12px;
   font-weight: 600;
-  margin: 12px;
+  color: #ffffff;
+  margin: 5px;
+  margin-right: 12px;
+  text-align: center;
   float: right;
 }
 

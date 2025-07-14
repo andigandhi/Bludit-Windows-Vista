@@ -17,7 +17,7 @@
 <?php echo Theme::css('css/style.css'); ?>
 
 <!-- Load CSS: 98.css -->
-<link rel="stylesheet" href="https://unpkg.com/98.css" />
+<link rel="stylesheet" href="https://unpkg.com/7.css" />
 
 <!-- Load Bludit Plugins: Site head -->
 <?php Theme::plugins('siteHead'); ?>
