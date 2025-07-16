@@ -4,9 +4,11 @@
 
 /* CSS Document */
 body {
-  background-color: #008080;
+  background-color: #0760b9;
   background-image: url('../img/bg.jpg');
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 100%;
   overflow: hidden;
   overflow: none;
   color: #000;
@@ -53,20 +55,9 @@ img {
   position: absolute;
   left: 5px;
   width: 450px;
+  max-width: 100%;
   /*overflow: overlay;*/
   z-index: 100;
-}
-
-#mainMenuSideBar {
-  background: rgb(0, 0, 126);
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 126, 1) 70%,
-    rgba(14, 6, 246, 1) 85%,
-    rgba(0, 0, 126, 1) 100%
-  );
-  width: 15px;
-  float: left;
 }
 
 #mainMenuLeft {
@@ -90,7 +81,7 @@ img {
 }
 
 #menu-content-image {
-  width: 120px;
+  width: 200px;
   margin-top: 5px;
   margin-bottom: 10px;
   align-self: right;
@@ -118,21 +109,38 @@ img {
   cursor: pointer;
 }
 
+@media screen and (max-width: 450px) {
+  #mainMenuCategories {
+    display: none !important;
+  }
+}
+
 .menuButton {
+  border-radius: 5px;
   width: 98%;
   text-align: left;
   border: none;
   cursor: pointer;
-  margin: 0;
+  margin-bottom: 2px;
 }
 
 .menuButton:hover {
-  color: #ffffff;
-  background-color: #00007e;
+  margin-bottom: 0px;
+  background: var(--button-gradient-hovered);
+  border: var(--button-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--button-shadow);
+  border-color: var(--button-border-color-active);
 }
 
 .menuText {
   font-size: larger;
+}
+
+.menuIcon {
+  width: 25px;
+  margin: 5px;
+  float: left;
 }
 
 #taskbar {
@@ -149,10 +157,15 @@ img {
 .taskElement {
   float: left;
   text-align: center;
-  height: 40px;
+  height: 46px;
   margin-left: 5px;
-  width: 50px;
-  min-width: 20px;
+  margin-top: 2px;
+  width: 46px;
+}
+
+.taskElementImg {
+  width: 42px;
+  margin: 2px;
 }
 
 #btnClock {
@@ -186,7 +199,7 @@ button.active {
 }
 
 .window-body {
-  font-size: 150%;
+  max-width: 100%;
 }
 
 .nav-link {

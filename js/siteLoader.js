@@ -71,10 +71,7 @@ function addWindow(title, icon, innerHtml, w, h, left, top) {
   taskbar_item.setAttribute('class', 'taskElement active');
   taskbar_item.setAttribute('style', 'white-space:nowrap; overflow: hidden;');
   taskbar_item.setAttribute('onClick', 'toggleWindow(' + window_id + ')');
-  taskbar_item.innerHTML =
-    '<img alt="" src="' +
-    icon +
-    '" style="height: 25px; margin-right: 5px; margin-top:-4px; float:left;">';
+  taskbar_item.innerHTML = '<img alt="" src="' + icon + '" class="taskElementImg">';
   document.getElementById('taskbar').appendChild(taskbar_item);
 
   return window_id;
@@ -184,7 +181,7 @@ function positionTaskbar() {
       navigator.userAgent.substr(0, 4),
     )
   ) {
-    isMobile = true;
+    //isMobile = true;
   }
   if (isMobile) {
     document.getElementById('mainMenu').style.width = '75%';
@@ -196,7 +193,8 @@ function positionTaskbar() {
 
   var menuHeight = document.getElementById('mainMenu').offsetHeight;
   document.getElementById('mainMenu').style.marginTop = h - 50 - menuHeight + 'px';
-  document.getElementById('mainMenuSideBar').style.height = menuHeight + 'px';
+
+  document.body.style.backgroundPositionY = h - (1200 / 1920) * window.innerWidth + 'px';
 }
 
 // Toggles the visibility of the menu
@@ -243,18 +241,14 @@ function add_desktop_item(itemTitle, itemContent, itemImage) {
 // Function to add a menu point entry to the menu
 function add_menu_item(itemTitle, itemContent, itemImage) {
   let menu_item = document.createElement('div');
-  menu_item.style.height = '30px';
+  menu_item.style.height = '40px';
   // Add Icon
   if (itemImage != '')
     menu_item.innerHTML =
-      '<img alt="Icon for menu item ' +
-      itemTitle +
-      '" src="' +
-      itemImage +
-      '" style="width: 20px; margin: 5px; float:left;">';
+      '<img alt="Icon for menu item ' + itemTitle + '" src="' + itemImage + '" class="menuIcon">';
   // Add Text
   menu_item.innerHTML +=
-    '<div style="height: 20px;line-height: 20px;margin: 5px;float:left;"><b>' +
+    '<div style="height: 30px;line-height: 30px;margin: 5px;float:left;"><b>' +
     itemTitle +
     '</b></div>';
   menu_item.className = 'menuButton';
