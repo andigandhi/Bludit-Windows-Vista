@@ -4,11 +4,7 @@
 
 /* CSS Document */
 body {
-  background-color: #0760b9;
-  background-image: url('../img/bg.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 100%;
+  background-color: #74b8fc;
   overflow: hidden;
   overflow: none;
   color: #000;
@@ -26,6 +22,15 @@ body {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+@media only screen and (orientation: landscape) {
+  body {
+    background-image: url('../img/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 100%;
+  }
 }
 
 a {
