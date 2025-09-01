@@ -186,9 +186,6 @@ function positionTaskbar() {
   var menuHeight = document.getElementById('mainMenu').offsetHeight;
   document.getElementById('mainMenu').style.marginTop =
     screen_dimension[1] - 50 - menuHeight + 'px';
-
-  document.body.style.backgroundPositionY =
-    screen_dimension[1] - (1200 / 1920) * window.innerWidth + 'px';
 }
 
 // Toggles the visibility of the menu

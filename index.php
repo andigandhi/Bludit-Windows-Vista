@@ -20,6 +20,17 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 
 <body onResize="positionTaskbar()" onLoad="positionTaskbar()">
 
+    <!-- Background Aurora Lightrays -->
+    <div class="light-rays">
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+    </div>
+    <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+        <path class="curve" d="M 200 1000 C 400 600, 600 400, 800 0" />
+        <path class="curve" d="M 0 900 C 300 500, 700 300, 1000 0" />
+    </svg>
+
 	<!-- Creates the main Menu -->
 	<div class="window glass" id="mainMenu">
 	   <div id="mainMenuLeft">
