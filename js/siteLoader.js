@@ -111,7 +111,7 @@ function fillWindow(title, link, icon, windowSize = [816, 480], windowBorder) {
     '<iframe class="window-content" width="' +
     (windowSize[0] - 16) +
     'px" height="' +
-    (windowSize[1] - 30) +
+    windowSize[1] +
     'px" type="text/html" src="' +
     link +
     '" frameborder="0" allowfullscreen onmouseover = "mouseMove(\'event\')"></iframe>';
@@ -129,7 +129,7 @@ function resizeWindow(window_id) {
 
   if (window_div.style.width == '100%') {
     w = '816px';
-    h = '480px';
+    h = '515px';
     resize_button.ariaLabel = 'Maximize';
   } else {
     window_div.style.top = '0';
