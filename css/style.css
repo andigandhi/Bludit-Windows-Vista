@@ -155,6 +155,10 @@ img {
   #mainMenuCategories {
     display: none !important;
   }
+
+  #mainMenu {
+      width: 320px;
+  }
 }
 
 .menuButton {
@@ -167,7 +171,6 @@ img {
 }
 
 .menuButton:hover {
-  margin-bottom: 0px;
   background: var(--button-gradient-hovered);
   border: var(--button-border);
   border-radius: var(--border-radius);
@@ -246,7 +249,8 @@ button.active {
 
 .nav-link {
   width: 20px;
-  margin: 7px;
+  margin-top: 15px;
+  margin-right: 15px;
   float: right;
 }
 
@@ -254,7 +258,7 @@ button.active {
   font-size: 12px;
   font-weight: 600;
   color: #ffffff;
-  margin: 5px;
+  margin-top: 10px;
   margin-right: 12px;
   text-align: center;
   float: right;
