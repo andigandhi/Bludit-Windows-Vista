@@ -49,7 +49,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     echo '<div class="mainMenuCategoriesItem" onClick=\'fillWindow("' .
       $fields['name'] .
       '","?category=' .
-      $fields['name'] .
+      $key .
       '","")\'>' .
       $fields['name'] .
       '</div>';

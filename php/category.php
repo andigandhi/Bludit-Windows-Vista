@@ -21,16 +21,36 @@
 	<title>.</title>
 </head>
 <body>
-    Categories are currently not supported.
-    Here, category <?php
+    <h1>Category: <?php
+    global $categories;
     global $currentCategory;
-    echo $currentCategory;
-    ?> should be displayed.
-    <?php //echo $categories;
+    echo $categories->getName($currentCategory);
+    ?></h1>
+    <?php
+    global $categories;
+    global $currentCategory;
 
+    foreach ($categories->getList($currentCategory, 1, -1) as $key => $value) {
+        try {
+          $page = new Page($value);
 
-    $list = $categories->getList($currentCategory, 1, -1);
-    echo $list;
-    ?>
+          if (($page->type() == 'published') ||
+            ($page->type() == 'sticky') ||
+            ($page->type() == 'static')
+          ) {
+              $title = $page->title();
+              $image = $page->coverImage();
+              echo '<p>';
+              echo '<a href="'.$page->permaLink().'?loadedFromIndex">';
+              // echo '<img alt="Icon for menu item '.$title.'" src="' .$image. '" class="menuIcon">';
+              echo '<h2>'.$title.'</h2>';
+              echo '</a>';
+              echo $page->description().'</p><hr>';
+          }
+        } catch (Exception $e) {
+          // continue
+        }
+    }
+?>
 </body>
 </html>
