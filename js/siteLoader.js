@@ -124,14 +124,15 @@ function resizeWindow(window_id) {
   var window_div = document.getElementById(window_id);
   var resize_button = document.getElementById('btn-resize-' + window_id);
 
-  w = '100%';
-  h = '100%';
-
   if (window_div.style.width == '100%') {
     w = '816px';
     h = '515px';
+    window_div.style.top = Math.floor(Math.random() * (screen_dimension[1] - 515 - 50)) + "px";
+    window_div.style.left =  Math.floor(Math.random() * (document.body.clientWidth - 816)) + "px";
     resize_button.ariaLabel = 'Maximize';
   } else {
+    w = '100%';
+    h = screen_dimension[1] - 50 + 'px';
     window_div.style.top = '0';
     window_div.style.left = '0';
     resize_button.ariaLabel = 'Restore';
