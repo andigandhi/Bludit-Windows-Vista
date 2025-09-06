@@ -132,6 +132,15 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
         // Create the page object from the page key
         $pageObj = new Page($list[$i]);
         if (!$pageObj->noindex()) {
+          if ($pageObj->getValue("type") == "sticky") {
+              echo 'fillWindow("' .
+                $pageObj->title() .
+                '", "' .
+                $pageObj->permalink() .
+                '?loadedFromIndex", "' .
+                $pageObj->coverImage() .
+                '");';
+          }
           echo 'add_menu_item("' .
             $pageObj->title() .
             '", "' .
