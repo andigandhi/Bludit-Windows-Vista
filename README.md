@@ -1,6 +1,6 @@
-# 98.css - Bludit Theme
+# 7.css - Bludit Theme
 
-A Windows98 based, interactive Theme for the content management system [Bludit](https://www.bludit.com/) based on the great work of [jdan](https://github.com/jdan/98.css).
+An interactive Windws 7 / Windows Vista Theme for the content management system [Bludit](https://www.bludit.com/) based on the great work of [jdan](https://github.com/jdan/98.css) and [Khang](https://khang-nd.github.io/7.css/).
 
 A demonstration of the theme can be seen on my [personal homepage](https://andi.grasserisen.de).
 
