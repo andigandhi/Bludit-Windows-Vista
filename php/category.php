@@ -32,20 +32,25 @@
 
     foreach ($categories->getList($currentCategory, 1, -1) as $key => $value) {
         try {
-          $page = new Page($value);
-
+          $pageObj = new Page($value);
           if (($page->type() == 'published') ||
             ($page->type() == 'sticky') ||
             ($page->type() == 'static')
           ) {
-              $title = $page->title();
-              $image = $page->coverImage();
-              echo '<p>';
-              echo '<a href="'.$page->permaLink().'?loadedFromIndex">';
-              // echo '<img alt="Icon for menu item '.$title.'" src="' .$image. '" class="menuIcon">';
-              echo '<h2>'.$title.'</h2>';
-              echo '</a>';
-              echo $page->description().'</p><hr>';
+            echo '<a href="' .
+              $pageObj->permalink() .
+              '?loadedFromIndex"><div class="menuButton" style="height: 30px">';
+            if ($pageObj->coverImage() != '') {
+              echo '<img alt="Icon for menu item ' .
+                $pageObj->title() .
+                '" src="' .
+                $pageObj->coverImage() .
+                '" style="width: 20px; margin: 5px; float:left;">';
+            }
+            echo '<div style="height: 20px;line-height: 20px;margin: 5px;float:left;"><b>' .
+              $pageObj->title() .
+              '</b></div></div></a>';
+            echo $pageObj->description().'<hr>';
           }
         } catch (Exception $e) {
           // continue
