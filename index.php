@@ -18,7 +18,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     <?php include THEME_DIR_PHP . 'head.php'; ?>
 </head>
 
-<body onResize="positionTaskbar()" onLoad="positionTaskbar()">
+<body onLoad="positionTaskbar()">
 
     <!-- Background Aurora Lightrays -->
     <div class="light-rays">
@@ -50,7 +50,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
       $fields['name'] .
       '","?category=' .
       $key .
-      '","")\'>' .
+      '","' . DOMAIN_THEME . 'img/archive.png")\'>' .
       $fields['name'] .
       '</div>';
   }
