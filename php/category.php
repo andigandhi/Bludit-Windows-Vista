@@ -16,6 +16,9 @@
 	h3,h4,h5 {
 	font-size: 1.4rem;
 	}
+	.menuButton {
+	cursor: pointer;
+	}
 	</style>
 	<meta charset="utf-8">
 	<title>.</title>
@@ -32,30 +35,28 @@
 
     foreach ($categories->getList($currentCategory, 1, -1) as $key => $value) {
         try {
-          $pageObj = new Page($value);
-          if (($page->type() == 'published') ||
-            ($page->type() == 'sticky') ||
-            ($page->type() == 'static')
-          ) {
-            echo '<a href="' .
-              $pageObj->permalink() .
-              '?loadedFromIndex"><div class="menuButton" style="height: 30px">';
-            if ($pageObj->coverImage() != '') {
-              echo '<img alt="Icon for menu item ' .
-                $pageObj->title() .
-                '" src="' .
-                $pageObj->coverImage() .
-                '" style="width: 20px; margin: 5px; float:left;">';
+            $pageObj = new Page($value);
+            if (($pageObj->type() == 'published') ||
+                ($pageObj->type() == 'sticky') ||
+                ($pageObj->type() == 'static')
+            ) {
+                $title = htmlspecialchars($pageObj->title(), ENT_QUOTES);
+                $icon = $pageObj->coverImage() != '' ? $pageObj->coverImage() : '';
+                $url = $pageObj->permalink() . '?loadedFromIndex';
+
+                echo '<div class="menuButton" onclick="window.parent.wm.addWindow({title: \'' . $title . '\', icon: \'' . $icon . '\', link: \'' . $url . '\'})">';
+
+                if ($icon != '') {
+                    echo '<img alt="Icon for menu item ' . $title . '" src="' . $icon . '">';
+                }
+
+                echo '<div><b>' . $title . '</b></div></div>';
+                echo '<div style="margin-left:10px;">' . $pageObj->description() . '</div><hr>';
             }
-            echo '<div style="height: 20px;line-height: 20px;margin: 5px;float:left;"><b>' .
-              $pageObj->title() .
-              '</b></div></div></a>';
-            echo $pageObj->description().'<hr>';
-          }
         } catch (Exception $e) {
-          // continue
+            // continue
         }
     }
-?>
+    ?>
 </body>
 </html>
