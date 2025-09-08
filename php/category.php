@@ -20,8 +20,8 @@
 	cursor: pointer;
 	}
 	.iconImage {
-	width: 20px;
-	margin: 5px;
+	width: 1.6rem;
+	margin-right: 0.5rem;
 	float:left;
 	}
 	</style>
