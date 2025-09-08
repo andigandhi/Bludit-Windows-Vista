@@ -16,6 +16,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 <html lang="<?php echo Theme::lang(); ?>">
 <head>
     <?php include THEME_DIR_PHP . 'head.php'; ?>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 </head>
 
 <body onLoad="wm.positionTaskbar()">
