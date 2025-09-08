@@ -19,7 +19,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 </head>
 
-<body onLoad="wm.positionTaskbar()">
+<body>
 
     <!-- Background Aurora Lightrays -->
     <div class="light-rays">
@@ -33,7 +33,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     </svg>
 
 	<!-- Creates the main Menu -->
-	<div class="window glass" id="mainMenu">
+	<div class="window glass" id="mainMenu" style="visibility: hidden;">
 	   <div id="mainMenuLeft">
     		<div id="menu_content">
     		</div>
@@ -60,7 +60,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 	<!-- Creates the Taskbar -->
 	<div class="window glass" id="taskbar">
 		<!-- Button for the main Menu -->
-		<button id="taskMenBtn" class="taskElement active" onClick="toggleMenu()" aria-label="Toggle main menu"><img alt="Toggle main menu" src="<?php echo DOMAIN_THEME .
+		<button id="taskMenBtn" class="taskElement active" aria-label="Toggle main menu"><img alt="Toggle main menu" src="<?php echo DOMAIN_THEME .
     '/img/start.png'; ?>" height="25px"></button>
 		<?php include THEME_DIR_PHP . 'navbar.php'; ?>
 	</div>

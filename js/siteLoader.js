@@ -316,4 +316,9 @@ document.addEventListener('DOMContentLoaded', () => {
       wm.addWindow(element);
     }
   });
+
+  wm.positionTaskbar();
+  if (!wm.isMobile) {
+    document.getElementById('mainMenu').style.visibility = '';
+  }
 });
