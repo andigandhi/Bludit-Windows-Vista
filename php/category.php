@@ -19,6 +19,11 @@
 	.menuButton {
 	cursor: pointer;
 	}
+	.iconImage {
+	width: 20px;
+	margin: 5px;
+	float:left;
+	}
 	</style>
 	<meta charset="utf-8">
 	<title>.</title>
@@ -47,10 +52,10 @@
                 echo '<div class="menuButton" onclick="window.parent.wm.addWindow({title: \'' . $title . '\', icon: \'' . $icon . '\', link: \'' . $url . '\'})">';
 
                 if ($icon != '') {
-                    echo '<img alt="Icon for menu item ' . $title . '" src="' . $icon . '">';
+                    echo '<img class="iconImage" alt="Icon for menu item ' . $title . '" src="' . $icon . '">';
                 }
 
-                echo '<div><b>' . $title . '</b></div></div>';
+                echo '<h2><b>' . $title . '</b></h2></div>';
                 echo '<div style="margin-left:10px;">' . $pageObj->description() . '</div><hr>';
             }
         } catch (Exception $e) {
