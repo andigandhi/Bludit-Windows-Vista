@@ -18,7 +18,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     <?php include THEME_DIR_PHP . 'head.php'; ?>
 </head>
 
-<body onLoad="positionTaskbar()">
+<body onLoad="wm.positionTaskbar()">
 
     <!-- Background Aurora Lightrays -->
     <div class="light-rays">
@@ -46,13 +46,11 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
 		<?php
   global $categories;
   foreach ($categories->db as $key => $fields) {
-    echo '<div class="mainMenuCategoriesItem" onClick=\'fillWindow("' .
-      $fields['name'] .
-      '","?category=' .
-      $key .
-      '","' . DOMAIN_THEME . 'img/archive.png")\'>' .
-      $fields['name'] .
-      '</div>';
+    echo '<div class="mainMenuCategoriesItem" onClick=\'wm.addWindow({';
+    echo 'title: "' . $fields['name'] . '", ';
+    echo 'link: "?category=' . $key . '", ';
+    echo 'icon: "' . DOMAIN_THEME . 'img/archive.png"';
+    echo '})\'>' . $fields['name'] . '</div>';
   }
   ?>
     </div>
@@ -75,6 +73,7 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
     <?php echo Theme::js('js/siteLoader.js'); ?>
 
     <script>
+    const desktopIcons = [
     <?php
     global $pages;
 
@@ -93,19 +92,20 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
         // Create the page object from the page key
         $pageObj = new Page($list[$i]);
         if (!$pageObj->noindex()) {
-          echo 'add_desktop_item("' .
-            $pageObj->title() .
-            '", "' .
-            $pageObj->permalink() .
-            '?loadedFromIndex", "' .
-            $pageObj->coverImage() .
-            '");';
+          echo '{';
+          echo 'title: "' . $pageObj->title() . '", ';
+          echo 'link: "' . $pageObj->permalink() . '?loadedFromIndex", ';
+          echo 'icon: "' . $pageObj->coverImage() . '"';;
+          echo '},';
         }
       } catch (Exception $e) {
         // Continue
       }
     }
-
+    ?>
+    ];
+    const menuIcons = [
+    <?php
     $list = array_merge(
       $pages->getList(
         $pageNumber = 1,
@@ -132,33 +132,35 @@ if ($WHERE_AM_I == 'page' && isset($_GET['loadedFromIndex'])) {
         // Create the page object from the page key
         $pageObj = new Page($list[$i]);
         if (!$pageObj->noindex()) {
-          if ($pageObj->getValue("type") == "sticky") {
-              echo 'fillWindow("' .
-                $pageObj->title() .
-                '", "' .
-                $pageObj->permalink() .
-                '?loadedFromIndex", "' .
-                $pageObj->coverImage() .
-                '");';
-          }
-          echo 'add_menu_item("' .
-            $pageObj->title() .
-            '", "' .
-            $pageObj->permalink() .
-            '?loadedFromIndex", "' .
-            $pageObj->coverImage() .
-            '");';
+          // if ($pageObj->getValue("type") == "sticky") {
+          //     echo 'wm.fillWindow("' .
+          //       $pageObj->title() .
+          //       '", "' .
+          //       $pageObj->permalink() .
+          //       '?loadedFromIndex", "' .
+          //       $pageObj->coverImage() .
+          //       '");';
+          // }
+          echo '{';
+          echo 'title: "' . $pageObj->title() . '", ';
+          echo 'link: "' . $pageObj->permalink() . '?loadedFromIndex", ';
+          echo 'icon: "' . $pageObj->coverImage() . '", ';
+          echo 'type: "' . $pageObj->getValue("type") . '"';
+          echo '},';
         }
       } catch (Exception $e) {
         // Continue
       }
     }
     ?>
-
-    // Pagination
     <?php if (Paginator::numberOfPages() > 1) {
-      echo 'add_menu_item("Archive", "?archive", "' . DOMAIN_THEME . 'img/archive.png");';
+        echo '{';
+        echo 'title: "Archive", ';
+        echo 'link: "?archive", ';
+        echo 'icon: "' . DOMAIN_THEME . 'img/archive.png"';;
+        echo '},';
     } ?>
+    ];
     </script>
 
 	<!-- Load the content if a specific page is opened -->
